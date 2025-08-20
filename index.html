@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Control Compacto</title>
+<title>Dashboard Completo</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     body {
@@ -50,24 +50,17 @@
 <body>
 
 <header>
-    Panel de Control Compacto
+    Dashboard Completo
 </header>
 
 <div class="dashboard">
 
-    <!-- Indicadores -->
-    <div class="card">
-        <h3>Ventas Totales</h3>
-        <div class="indicator">$15,250</div>
-    </div>
-    <div class="card">
-        <h3>Ventas del Mes</h3>
-        <div class="indicator">$4,870</div>
-    </div>
-    <div class="card">
-        <h3>Contribución</h3>
-        <div class="indicator">68%</div>
-    </div>
+    <!-- KPIs -->
+    <div class="card"><h3>Ventas Totales</h3><div class="indicator">$15,250</div></div>
+    <div class="card"><h3>Ventas del Mes</h3><div class="indicator">$4,870</div></div>
+    <div class="card"><h3>Contribución</h3><div class="indicator">68%</div></div>
+    <div class="card"><h3>Clientes Activos</h3><div class="indicator">1,245</div></div>
+    <div class="card"><h3>Órdenes Recibidas</h3><div class="indicator">342</div></div>
 
     <!-- Gráfico de Stock (Bar) -->
     <div class="card">
@@ -81,90 +74,80 @@
         <canvas id="maupkChart"></canvas>
     </div>
 
-    <!-- Gráfico de Ventas (Line) -->
+    <!-- Ventas Semanales (Line) -->
     <div class="card">
         <h3>Ventas Semanales</h3>
-        <canvas id="lineChart"></canvas>
+        <canvas id="salesLineChart"></canvas>
+    </div>
+
+    <!-- Ingresos Diarios (Line) -->
+    <div class="card">
+        <h3>Ingresos Diarios</h3>
+        <canvas id="incomeLineChart"></canvas>
+    </div>
+
+    <!-- Productos más Vendidos (Horizontal Bar) -->
+    <div class="card">
+        <h3>Productos más Vendidos</h3>
+        <canvas id="topProductsChart"></canvas>
     </div>
 
 </div>
 
 <script>
-    // Gráfico de barras (Stock)
-    const stockCtx = document.getElementById('stockChart').getContext('2d');
-    new Chart(stockCtx, {
+    // Stock de productos
+    new Chart(document.getElementById('stockChart'), {
         type: 'bar',
         data: {
-            labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'],
-            datasets: [{
-                label: 'Stock',
-                data: [120, 80, 150, 70, 95],
-                backgroundColor: '#4CAF50'
-            }]
+            labels: ['Producto A','Producto B','Producto C','Producto D','Producto E'],
+            datasets: [{label:'Stock', data:[120, 80, 150, 70, 95], backgroundColor:'#4CAF50'}]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false },
-                title: { display: true, text: 'Stock por Producto' }
-            },
-            layout: {
-                padding: { top: 10, bottom: 10, left: 10, right: 10 }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
+        options: {responsive:true, plugins:{legend:{display:false}, title:{display:true,text:'Stock por Producto'}}, scales:{y:{beginAtZero:true}}, layout:{padding:10}}
     });
 
-    // Gráfico de torta (Maupk)
-    const maupkCtx = document.getElementById('maupkChart').getContext('2d');
-    new Chart(maupkCtx, {
+    // Maupk Pie
+    new Chart(document.getElementById('maupkChart'), {
         type: 'pie',
         data: {
-            labels: ['Categoría 1', 'Categoría 2', 'Categoría 3', 'Categoría 4'],
-            datasets: [{
-                label: 'Maupk',
-                data: [30, 25, 20, 25],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD']
-            }]
+            labels:['Categoría 1','Categoría 2','Categoría 3','Categoría 4'],
+            datasets:[{data:[30,25,20,25], backgroundColor:['#FF6384','#36A2EB','#FFCE56','#8E44AD']}]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' },
-                title: { display: true, text: 'Distribución Maupk' }
-            }
-        }
+        options:{responsive:true, plugins:{legend:{position:'bottom'}, title:{display:true,text:'Distribución Maupk'}}}
     });
 
-    // Gráfico de líneas (Ventas Semanales)
-    const lineCtx = document.getElementById('lineChart').getContext('2d');
-    new Chart(lineCtx, {
-        type: 'line',
-        data: {
-            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
-            datasets: [{
-                label: 'Ventas',
-                data: [500, 700, 600, 800, 900, 650, 720],
-                borderColor: '#FF5733',
-                backgroundColor: 'rgba(255,87,51,0.2)',
-                tension: 0.3,
-                fill: true
-            }]
+    // Ventas Semanales Line
+    new Chart(document.getElementById('salesLineChart'), {
+        type:'line',
+        data:{
+            labels:['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],
+            datasets:[{label:'Ventas', data:[500,700,600,800,900,650,720], borderColor:'#FF5733', backgroundColor:'rgba(255,87,51,0.2)', tension:0.3, fill:true}]
         },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: true, position: 'bottom' },
-                title: { display: true, text: 'Ventas Semanales' }
-            },
-            layout: {
-                padding: { top: 15, bottom: 15, left: 15, right: 15 }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
+        options:{responsive:true, plugins:{legend:{display:true,position:'bottom'}, title:{display:true,text:'Ventas Semanales'}}, layout:{padding:10}, scales:{y:{beginAtZero:true}}}
+    });
+
+    // Ingresos Diarios Line
+    new Chart(document.getElementById('incomeLineChart'), {
+        type:'line',
+        data:{
+            labels:['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'],
+            datasets:[{label:'Ingresos', data:[1200,1350,1100,1500,1400,1250,1600], borderColor:'#2980b9', backgroundColor:'rgba(41,128,185,0.2)', tension:0.3, fill:true}]
+        },
+        options:{responsive:true, plugins:{legend:{display:true,position:'bottom'}, title:{display:true,text:'Ingresos Diarios'}}, layout:{padding:10}, scales:{y:{beginAtZero:true}}}
+    });
+
+    // Productos más Vendidos Horizontal Bar
+    new Chart(document.getElementById('topProductsChart'), {
+        type:'bar',
+        data:{
+            labels:['Producto C','Producto A','Producto E','Producto B','Producto D'],
+            datasets:[{label:'Unidades Vendidas', data:[150,120,100,80,70], backgroundColor:'#f39c12'}]
+        },
+        options:{
+            indexAxis:'y',
+            responsive:true,
+            plugins:{legend:{display:false}, title:{display:true,text:'Productos más Vendidos'}},
+            scales:{x:{beginAtZero:true}},
+            layout:{padding:10}
         }
     });
 </script>
