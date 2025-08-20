@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel de Control</title>
+<title>Panel de Control Compacto</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     body {
@@ -14,40 +14,43 @@
     header {
         background-color: #2f3640;
         color: white;
-        padding: 20px;
+        padding: 15px;
         text-align: center;
+        font-size: 1.5rem;
     }
     .dashboard {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 20px;
-        padding: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        padding: 15px;
     }
     .card {
         background-color: white;
         border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        padding: 15px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         text-align: center;
     }
     .card h3 {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
         color: #333;
+        font-size: 1rem;
     }
     .indicator {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: bold;
         color: #2f3640;
     }
     canvas {
         max-width: 100%;
+        height: 200px;
     }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>Panel de Control</h1>
+    Panel de Control Compacto
 </header>
 
 <div class="dashboard">
@@ -78,12 +81,18 @@
         <canvas id="maupkChart"></canvas>
     </div>
 
+    <!-- Gráfico de Ventas (Line) -->
+    <div class="card">
+        <h3>Ventas Semanales</h3>
+        <canvas id="lineChart"></canvas>
+    </div>
+
 </div>
 
 <script>
     // Gráfico de barras (Stock)
     const stockCtx = document.getElementById('stockChart').getContext('2d');
-    const stockChart = new Chart(stockCtx, {
+    new Chart(stockCtx, {
         type: 'bar',
         data: {
             labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D', 'Producto E'],
@@ -97,22 +106,20 @@
             responsive: true,
             plugins: {
                 legend: { display: false },
-                title: {
-                    display: true,
-                    text: 'Stock por Producto'
-                }
+                title: { display: true, text: 'Stock por Producto' }
+            },
+            layout: {
+                padding: { top: 10, bottom: 10, left: 10, right: 10 }
             },
             scales: {
-                y: {
-                    beginAtZero: true
-                }
+                y: { beginAtZero: true }
             }
         }
     });
 
     // Gráfico de torta (Maupk)
     const maupkCtx = document.getElementById('maupkChart').getContext('2d');
-    const maupkChart = new Chart(maupkCtx, {
+    new Chart(maupkCtx, {
         type: 'pie',
         data: {
             labels: ['Categoría 1', 'Categoría 2', 'Categoría 3', 'Categoría 4'],
@@ -126,10 +133,37 @@
             responsive: true,
             plugins: {
                 legend: { position: 'bottom' },
-                title: {
-                    display: true,
-                    text: 'Distribución Maupk'
-                }
+                title: { display: true, text: 'Distribución Maupk' }
+            }
+        }
+    });
+
+    // Gráfico de líneas (Ventas Semanales)
+    const lineCtx = document.getElementById('lineChart').getContext('2d');
+    new Chart(lineCtx, {
+        type: 'line',
+        data: {
+            labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'],
+            datasets: [{
+                label: 'Ventas',
+                data: [500, 700, 600, 800, 900, 650, 720],
+                borderColor: '#FF5733',
+                backgroundColor: 'rgba(255,87,51,0.2)',
+                tension: 0.3,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: true, position: 'bottom' },
+                title: { display: true, text: 'Ventas Semanales' }
+            },
+            layout: {
+                padding: { top: 15, bottom: 15, left: 15, right: 15 }
+            },
+            scales: {
+                y: { beginAtZero: true }
             }
         }
     });
