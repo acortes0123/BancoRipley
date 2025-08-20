@@ -61,35 +61,37 @@
     <div class="card"><h3>Contribución</h3><div class="indicator">68%</div></div>
     <div class="card"><h3>Clientes Activos</h3><div class="indicator">1,245</div></div>
     <div class="card"><h3>Órdenes Recibidas</h3><div class="indicator">342</div></div>
+    <div class="card"><h3>Beneficio Neto</h3><div class="indicator">$7,800</div></div>
 
-    <!-- Gráfico de Stock (Bar) -->
+    <!-- Gráficos -->
     <div class="card">
         <h3>Stock de Productos</h3>
         <canvas id="stockChart"></canvas>
     </div>
 
-    <!-- Gráfico de Maupk (Pie) -->
     <div class="card">
         <h3>Distribución Maupk</h3>
         <canvas id="maupkChart"></canvas>
     </div>
 
-    <!-- Ventas Semanales (Line) -->
     <div class="card">
         <h3>Ventas Semanales</h3>
         <canvas id="salesLineChart"></canvas>
     </div>
 
-    <!-- Ingresos Diarios (Line) -->
     <div class="card">
         <h3>Ingresos Diarios</h3>
         <canvas id="incomeLineChart"></canvas>
     </div>
 
-    <!-- Productos más Vendidos (Horizontal Bar) -->
     <div class="card">
         <h3>Productos más Vendidos</h3>
         <canvas id="topProductsChart"></canvas>
+    </div>
+
+    <div class="card">
+        <h3>Crecimiento Clientes Semanal</h3>
+        <canvas id="clientsLineChart"></canvas>
     </div>
 
 </div>
@@ -149,6 +151,16 @@
             scales:{x:{beginAtZero:true}},
             layout:{padding:10}
         }
+    });
+
+    // Crecimiento Clientes Semanal Line
+    new Chart(document.getElementById('clientsLineChart'), {
+        type:'line',
+        data:{
+            labels:['Semana 1','Semana 2','Semana 3','Semana 4'],
+            datasets:[{label:'Clientes', data:[1200,1245,1300,1350], borderColor:'#27ae60', backgroundColor:'rgba(39,174,96,0.2)', tension:0.3, fill:true}]
+        },
+        options:{responsive:true, plugins:{legend:{display:true,position:'bottom'}, title:{display:true,text:'Crecimiento Clientes Semanal'}}, layout:{padding:10}, scales:{y:{beginAtZero:true}}}
     });
 </script>
 
