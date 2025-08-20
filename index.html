@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 20px;
+            text-align: center;
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+        }
+        canvas {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Panel de Control</h1>
+</header>
+
+<div class="container">
+    <!-- Indicadores de Ventas -->
+    <div class="card">
+        <h3>Ventas Totales</h3>
+        <p style="font-size: 2rem;">$12,345</p>
+    </div>
+    <div class="card">
+        <h3>Ventas del Mes</h3>
+        <p style="font-size: 2rem;">$4,567</p>
+    </div>
+    <div class="card">
+        <h3>Contribución</h3>
+        <p style="font-size: 2rem;">75%</p>
+    </div>
+
+    <!-- Gráfico de Stock -->
+    <div class="card">
+        <h3>Stock de Productos</h3>
+        <canvas id="stockChart"></canvas>
+    </div>
+
+    <!-- Gráfico de Torta Maupk -->
+    <div class="card">
+        <h3>Maupk Distribución</h3>
+        <canvas id="maupkChart"></canvas>
+    </div>
+</div>
+
+<script>
+    // Stock Bar Chart
+    const stockCtx = document.getElementById('stockChart').getContext('2d');
+    const stockChart = new Chart(stockCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Producto A', 'Producto B', 'Producto C', 'Producto D'],
+            datasets: [{
+                label: 'Stock',
+                data: [120, 90, 70, 50],
+                backgroundColor: '#4CAF50'
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: 'Stock por Producto'
+                }
+            }
+        }
+    });
+
+    // Maupk Pie Chart
+    const maupkCtx = document.getElementById('maupkChart').getContext('2d');
+    const maupkChart = new Chart(maupkCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Categoría 1', 'Categoría 2', 'Categoría 3'],
+            datasets: [{
+                label: 'Maupk',
+                data: [40, 35, 25],
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
